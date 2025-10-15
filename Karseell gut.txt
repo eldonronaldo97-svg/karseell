@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karseell - عروض العناية بالشعر</title>
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1302281691617529');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1302281691617529&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel Code -->
+
+<style>
+body {
+  font-family: "Cairo", sans-serif;
+  background-color: #fffaf6;
+  color: #222;
+  margin: 0;
+  padding: 0;
+}
+header {
+  text-align: center;
+  background-color: #7d1f2a;
+  color: white;
+  padding: 15px;
+  font-size: 28px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+.container {
+  max-width: 700px;
+  margin: 30px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.offer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid #f0dcdc;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.offer img {
+  width: 100%;
+  border-radius: 12px;
+  max-width: 300px;
+}
+.offer.selected {
+  border-color: #b22222;
+  box-shadow: 0 4px 12px rgba(178,34,34,0.3);
+}
+.offer h3 {
+  margin: 10px 0 5px 0;
+  color: #b22222;
+}
+.offer p {
+  text-align: center;
+  margin: 0;
+}
+.price {
+  font-size: 22px;
+  font-weight: bold;
+  color: #b22222;
+  margin-bottom: 15px;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+input, select {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+button {
+  background-color: #b22222;
+  color: white;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button:hover {
+  background-color: #7d1f2a;
+}
+.success-message {
+  display: none;
+  text-align: center;
+  font-size: 20px;
+  color: #2d862d;
+  margin-top: 15px;
+}
+.payment-note {
+  text-align: center;
+  font-weight: bold;
+  color: #b22222;
+  margin-bottom: 15px;
+}
+</style>
+</head>
+
+<body>
+<header>Karseell</header>
+
+<div class="container">
+
+  <div class="payment-note">💵 الدفع عند الاستلام فقط</div>
+
+  <!-- العروض -->
+  <div class="offer" data-price="599" id="offer1">
+    <img src="https://www.karseell.com/ar/product/karseell-collagen-hair-treatmenthair-mask-argan-oil-set/" alt="الماسك + السيروم">
+    <h3>عرض 1: الماسك + السيروم فقط</h3>
+    <p>599 جنيه</p>
+  </div>
+
+  <div class="offer" data-price="799" id="offer2">
+    <img src="https://mahally.com/products/1803163295/297710287/" alt="المجموعة كاملة">
+    <h3>عرض 2: المجموعة كاملة</h3>
+    <p>799 جنيه</p>
+  </div>
+
+  <div class="offer" data-price="399" id="offer3">
+    <img src="https://www.karseell.com/product/karseell-collagen-hair-treatment-deep-repair-conditioning-argan-oil-collagen-hair-mask-essence-for-dry-damaged-hair-all-hair-types-16-90-oz-500ml/" alt="الماسك فقط">
+    <h3>عرض 3: الماسك فقط</h3>
+    <p>399 جنيه</p>
+  </div>
+
+  <!-- نموذج الطلب -->
+  <form id="orderForm">
+    <input type="text" id="name" placeholder="الاسم الكامل" required>
+    <input type="tel" id="phone" placeholder="رقم الهاتف" required>
+    <input type="text" id="city" placeholder="المحافظة" required>
+    <input type="text" id="address" placeholder="العنوان بالتفصيل" required>
+    <button type="submit">إرسال الطلب</button>
+  </form>
+
+  <div class="success-message" id="successMessage">✅ تم استلام طلبك بنجاح!</div>
+</div>
+
+<script>
+// اختيار العرض
+let selectedOffer = null;
+document.querySelectorAll('.offer').forEach(offer => {
+  offer.addEventListener('click', function() {
+    document.querySelectorAll('.offer').forEach(o => o.classList.remove('selected'));
+    this.classList.add('selected');
+    selectedOffer = this;
+  });
+});
+
+// إرسال الطلب
+document.getElementById("orderForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  if (!selectedOffer) {
+    alert("من فضلك اختر أحد العروض أولاً!");
+    return;
+  }
+
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const city = document.getElementById("city").value.trim();
+  const address = document.getElementById("address").value.trim();
+
+  if (!name || !phone || !city || !address) {
+    alert("من فضلك أكمل كل البيانات قبل الإرسال ✅");
+    return;
+  }
+
+  // تتبع الحدث في فيسبوك مع قيمة العرض
+  fbq('track', 'Purchase', {
+    value: parseFloat(selectedOffer.dataset.price),
+    currency: 'EGP'
+  });
+
+  // إظهار رسالة النجاح
+  document.getElementById("successMessage").style.display = "block";
+
+  // إعادة ضبط الحقول
+  e.target.reset();
+  selectedOffer.classList.remove('selected');
+  selectedOffer = null;
+});
+</script>
+
+</body>
+</html>
